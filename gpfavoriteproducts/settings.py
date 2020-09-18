@@ -65,7 +65,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "gpfavoriteproducts.wsgi.application"
 
-AUTH_USER_MODEL = "customers.User"
+AUTH_USER_MODEL = "customers.Customer"
 
 POSTGRES_SSL_REQUIRE = env.bool("POSTGRES_SSL_REQUIRE")
 
