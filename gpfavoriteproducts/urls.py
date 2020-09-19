@@ -13,6 +13,7 @@ router.register("customers", CustomerViewSet, basename="customers")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("favorites/", include("apps.favorites.urls", namespace="favorites")),
     path("token/", obtain_auth_token),
     re_path(r"^media/(?P<path>.*)$", url_static.serve, {"document_root": settings.MEDIA_ROOT},),
     re_path(r"^static/(?P<path>.*)$", url_static.serve, {"document_root": settings.STATIC_ROOT},),
