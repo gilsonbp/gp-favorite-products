@@ -34,8 +34,8 @@ msgid "Groups"
 msgstr "Grupos"
 
 #: apps/customers/models.py:34
-msgid "Users must have an email."
-msgstr "Os usuários devem ter um e-mail."
+msgid "Customers must have an email."
+msgstr "Os clientes devem ter um e-mail."
 
 #: apps/customers/models.py:50
 msgid "Registration Successful!"
@@ -58,24 +58,24 @@ msgid "Name"
 msgstr "Nome"
 
 #: apps/customers/models.py:68
-msgid "Enter the user's full name."
-msgstr "Digite o nome completo do usuário."
+msgid "Enter the customer's full name."
+msgstr "Digite o nome completo do cliente."
 
 #: apps/customers/models.py:72
 msgid "Active?"
 msgstr "Ativo?"
 
 #: apps/customers/models.py:73
-msgid "Only active users can access the system."
-msgstr "Apenas usuários ativos podem acessar o sistema."
+msgid "Only active customers can access the system."
+msgstr "Apenas clientes ativos podem acessar o sistema."
 
 #: apps/customers/models.py:77
 msgid "Is part of the team?"
 msgstr "Faz parte da equipe?"
 
 #: apps/customers/models.py:78
-msgid "Determines whether the user has access to the system panel."
-msgstr "Determina se o usuário tem acesso ao painel do sistema."
+msgid "Determines whether the customer has access to the system panel."
+msgstr "Determina se o cliente tem acesso ao painel do sistema."
 
 #: apps/customers/models.py:80
 msgid "Registration date"
@@ -87,27 +87,27 @@ msgstr "grupos"
 
 #: apps/customers/models.py:87
 msgid ""
-"The groups this user belongs to. A user will get all permissions granted to "
+"The groups this customer belongs to. A customer will get all permissions granted to "
 "each of their groups."
 msgstr ""
-"Os grupos aos quais este usuário pertence. Um usuário obterá todas as permissões concedidas a"
+"Os grupos aos quais este cliente pertence. Um cliente obterá todas as permissões concedidas a"
 "cada um de seus grupos."
 
 #: apps/customers/models.py:95
-msgid "user permissions"
-msgstr "permissões de usuário"
+msgid "customer permissions"
+msgstr "permissões do cliente"
 
 #: apps/customers/models.py:97
-msgid "Specific permissions for this user."
-msgstr "Permissões específicas para este usuário."
+msgid "Specific permissions for this customer."
+msgstr "Permissões específicas para este cliente."
 
 #: apps/customers/models.py:112
-msgid "User"
-msgstr "Usuário"
+msgid "Customer"
+msgstr "Cliente"
 
 #: apps/customers/models.py:113
-msgid "Users"
-msgstr "Usuários"
+msgid "Customers"
+msgstr "Clientes"
 
 #: apps/customers/models.py:122
 msgid "Full name"
