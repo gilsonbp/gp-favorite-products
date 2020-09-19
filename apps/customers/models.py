@@ -43,12 +43,11 @@ class CustomerManager(BaseUserManager):
         if not password:
             password = 123456
         customer = self.create_customer(email=email, name=name, password=password,)
-        customer.is_supercustomer = True
+        customer.is_superuser = True
         customer.is_staff = True
         customer.save(using=self._db)
         customer.email_customer(
-            _("Registration Successful!"),
-            "Login: {} | Password: {}".format(email, password),
+            _("Registration Successful!"), "Login: {} | Password: {}".format(email, password),
         )
         return customer
 
@@ -63,14 +62,10 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         error_messages={"unique": _("This email already exists.")},
     )
     name = models.CharField(
-        max_length=200,
-        verbose_name=_("Name"),
-        help_text=_("Enter the customer's full name."),
+        max_length=200, verbose_name=_("Name"), help_text=_("Enter the customer's full name."),
     )
     is_active = models.BooleanField(
-        default=True,
-        verbose_name=_("Active?"),
-        help_text=_("Only active customers can access the system."),
+        default=True, verbose_name=_("Active?"), help_text=_("Only active customers can access the system."),
     )
     is_staff = models.BooleanField(
         default=False,
