@@ -9,6 +9,14 @@ class CustomerTestCase(TestCase):
         self.assertEqual(customer.email, "test@test.com")
         self.assertEqual(customer.name, "Test customer")
 
+    def test_create_customer_without_email(self):
+        with self.assertRaises(ValueError):
+            Customer.objects.create_customer(email=None, name="User test")
+
+    def test_customer_full_name(self):
+        customer = Customer.objects.create_customer("test@test.com", "Test customer")
+        self.assertEqual(customer.get_full_name(), "Test customer")
+
     def test_create_superuser(self):
         customer = Customer.objects.create_superuser("super@test.com", "Test Super User", "123456")
         self.assertEqual(customer.email, "super@test.com")
