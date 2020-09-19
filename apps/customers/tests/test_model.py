@@ -1,5 +1,5 @@
 from django.test import TestCase
-
+from django.db import IntegrityError
 from apps.customers.models import Customer
 
 
@@ -14,3 +14,10 @@ class CustomerTestCase(TestCase):
         self.assertEqual(customer.email, "super@test.com")
         self.assertEqual(customer.name, "Test Super User")
         self.assertEqual(customer.is_superuser, True)
+
+    def test_update_empty_password(self):
+        customer = Customer.objects.create_customer("test2@test.com", "Test customer 2", "123456")
+
+        with self.assertRaises(IntegrityError):
+            customer.password = None
+            customer.save()
