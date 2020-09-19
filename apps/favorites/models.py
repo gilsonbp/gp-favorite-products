@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import gettext as _
-from sorl.thumbnail import ImageField, get_thumbnail
+from sorl.thumbnail import ImageField
 
 
 class CommonModel(models.Model):
@@ -35,6 +35,3 @@ class Product(CommonModel):
         ordering = ("title",)
         verbose_name = _("Product")
         verbose_name_plural = _("Product")
-
-    def get_image_url(self):
-        return get_thumbnail(self.image, "500x500", crop="center", quality=99)
