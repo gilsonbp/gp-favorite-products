@@ -48,7 +48,7 @@ class FavoriteProduct(CommonModel):
     )
 
     def __str__(self):
-        return f"{self.customer.get_full_name() - self.product.title}"
+        return f"{self.customer.get_full_name()} - {self.product.title}"
 
     class Meta:
         unique_together = ("customer", "product")
