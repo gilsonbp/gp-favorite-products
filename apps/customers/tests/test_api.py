@@ -8,7 +8,7 @@ from apps.customers.models import Customer
 class CustomerAPITestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.customer = Customer.objects.create_customer("test@test.com", "Test Customer")
+        cls.customer = Customer.objects.create_customer("test@test.com", "Test Customer", "123456")
 
     def setUp(self):
         self.client = APIClient()
@@ -37,3 +37,14 @@ class CustomerAPITestCase(APITestCase):
         response = self.client.patch(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["name"], "Test Customer 2")
+
+    def test_update_password_customer(self):
+        url = reverse("customers-detail", kwargs={"pk": self.customer.pk})
+        new_password = "654321"
+        data = {"password": new_password}
+
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        is_auth = self.client.login(email=self.customer.email, password=new_password)
+        self.assertEqual(is_auth, True)
