@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_yasg",
+    "sorl.thumbnail",
     "apps.customers",
     "apps.favorites",
 ]
