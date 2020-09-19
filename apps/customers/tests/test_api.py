@@ -1,14 +1,14 @@
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APIClient, APITestCase
 
-from apps.customers.models import Customer
+from apps.customers.tests.factories import CustomerFactory
 
 
 class CustomerAPITestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.customer = Customer.objects.create_customer("test@test.com", "Test Customer", "123456")
+        cls.customer = CustomerFactory()
 
     def setUp(self):
         self.client = APIClient()
@@ -50,10 +50,8 @@ class CustomerAPITestCase(APITestCase):
         self.assertEqual(is_auth, True)
 
     def test_delete_customer(self):
-        customer = Customer.objects.create_customer("test3@teste.com", "Test")
+        customer = CustomerFactory(title="Customer Test 3")
         self.client.force_authenticate(customer)
-
-        c = Customer.objects.get(pk=customer.pk)
 
         url = reverse("customers-detail", kwargs={"pk": customer.pk})
 
