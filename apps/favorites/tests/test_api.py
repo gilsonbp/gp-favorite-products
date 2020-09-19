@@ -41,3 +41,11 @@ class ProductAPITestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["count"], 1)
+
+    def test_update_product(self):
+        url = reverse("favorites:products-detail", kwargs={"pk": self.product.pk})
+        data = {"title": "Product Test 1"}
+
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], data["title"])
