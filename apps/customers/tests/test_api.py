@@ -48,3 +48,16 @@ class CustomerAPITestCase(APITestCase):
 
         is_auth = self.client.login(email=self.customer.email, password=new_password)
         self.assertEqual(is_auth, True)
+
+    def test_delete_customer(self):
+        customer = Customer.objects.create_customer("test3@teste.com", "Test")
+        self.client.force_authenticate(customer)
+
+        c = Customer.objects.get(pk=customer.pk)
+
+        url = reverse("customers-detail", kwargs={"pk": customer.pk})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertIsNone(response.data)
