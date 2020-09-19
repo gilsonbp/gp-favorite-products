@@ -49,3 +49,12 @@ class ProductAPITestCase(APITestCase):
         response = self.client.patch(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["title"], data["title"])
+
+    def test_delete_product(self):
+        product = ProductFactory(title="Product Test 2")
+        url = reverse("favorites:products-detail", kwargs={"pk": product.pk})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertIsNone(response.data)
