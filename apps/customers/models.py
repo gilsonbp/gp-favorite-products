@@ -28,29 +28,29 @@ class GpGroup(Group):
         verbose_name_plural = _("Groups")
 
 
-class UserManager(BaseUserManager):
-    def create_user(self, email, name, password=None):
+class CustomerManager(BaseUserManager):
+    def create_customer(self, email, name, password=None):
         if not email:
-            raise ValueError(_("Users must have an email."))
+            raise ValueError(_("Customers must have an email."))
 
-        user = self.model(email=email, name=name,)
+        customer = self.model(email=email, name=name,)
 
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+        customer.set_password(password)
+        customer.save(using=self._db)
+        return customer
 
     def create_superuser(self, email, name, password):
         if not password:
             password = 123456
-        user = self.create_user(email=email, name=name, password=password,)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save(using=self._db)
-        user.email_user(
+        customer = self.create_customer(email=email, name=name, password=password,)
+        customer.is_supercustomer = True
+        customer.is_staff = True
+        customer.save(using=self._db)
+        customer.email_customer(
             _("Registration Successful!"),
             "Login: {} | Password: {}".format(email, password),
         )
-        return user
+        return customer
 
 
 class Customer(AbstractBaseUser, PermissionsMixin):
@@ -65,17 +65,17 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(
         max_length=200,
         verbose_name=_("Name"),
-        help_text=_("Enter the user's full name."),
+        help_text=_("Enter the customer's full name."),
     )
     is_active = models.BooleanField(
         default=True,
         verbose_name=_("Active?"),
-        help_text=_("Only active users can access the system."),
+        help_text=_("Only active customers can access the system."),
     )
     is_staff = models.BooleanField(
         default=False,
         verbose_name=_("Is part of the team?"),
-        help_text=_("Determines whether the user has access to the system panel."),
+        help_text=_("Determines whether the customer has access to the system panel."),
     )
     date_joined = models.DateTimeField(_("Registration date"), default=timezone.now)
 
@@ -84,22 +84,22 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         verbose_name=_("groups"),
         blank=True,
         help_text=_(
-            "The groups this user belongs to. A user will get all permissions "
+            "The groups this customer belongs to. A customer will get all permissions "
             "granted to each of their groups."
         ),
-        related_name="user_set",
-        related_query_name="user",
+        related_name="customers",
+        related_query_name="customer",
     )
     user_permissions = models.ManyToManyField(
         Permission,
-        verbose_name=_("user permissions"),
+        verbose_name=_("customer permissions"),
         blank=True,
-        help_text=_("Specific permissions for this user."),
-        related_name="user_set",
-        related_query_name="user",
+        help_text=_("Specific permissions for this customer."),
+        related_name="customers",
+        related_query_name="customer",
     )
 
-    objects = UserManager()
+    objects = CustomerManager()
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
@@ -113,7 +113,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("Users")
 
     def clean(self):
-        super(User, self).clean()
+        super(Customer, self).clean()
         self.email = self.__class__.objects.normalize_email(self.email)
 
     def get_full_name(self):
@@ -121,8 +121,8 @@ class Customer(AbstractBaseUser, PermissionsMixin):
 
     get_full_name.short_description = _("Full name")
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
+    def email_customer(self, subject, message, from_email=None, **kwargs):
         """
-        Sends an email to this User.
+        Sends an email to this Customer.
         """
         send_mail(subject, message, from_email, [self.email], **kwargs)
