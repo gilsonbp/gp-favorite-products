@@ -1,22 +1,16 @@
-from rest_framework import mixins, viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework import viewsets
 
 from .models import Customer
 from .permissions import AllowCreate
 from .serializers import CustomerSerializer
 
 
-class CustomerViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin):
+class CustomerViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
     permission_classes = [AllowCreate]
+    pagination_class = None
 
-    @action(methods=["get"], detail=False, url_path="me", url_name="me")
-    def me(self, request):
-        customer = self.get_object()
-        serializer = self.get_serializer(customer)
-        return Response(serializer.data)
-
-    def get_object(self):
-        return self.request.user
+    def get_queryset(self):
+        qs = super(CustomerViewSet, self).get_queryset()
+        return qs.filter(pk=self.request.user.pk)
