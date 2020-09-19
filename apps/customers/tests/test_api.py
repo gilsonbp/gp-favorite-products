@@ -29,3 +29,11 @@ class CustomerAPITestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_update_customer(self):
+        url = reverse("customers-detail", kwargs={"pk": self.customer.pk})
+        data = {"name": "Test Customer 2"}
+
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["name"], "Test Customer 2")
