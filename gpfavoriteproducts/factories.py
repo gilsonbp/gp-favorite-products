@@ -4,15 +4,15 @@ import factory
 from django.core.files.base import ContentFile
 
 from apps.customers.models import Customer
-from apps.favorites.models import Product
+from apps.favorites.models import FavoriteProduct, Product
 
 
 class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Product
 
-    title = "Product Test 0"
-    brand = "Brand Test 0"
+    title = factory.Sequence(lambda n: "Product Test %s" % n)
+    brand = factory.Sequence(lambda n: "Brand Test %s" % n)
     price = Decimal("18.99")
     image = factory.LazyAttribute(
         lambda _: ContentFile(
@@ -25,5 +25,13 @@ class CustomerFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Customer
 
-    email = "test0@test.com"
-    name = "Customer Test 0"
+    email = factory.Sequence(lambda n: "test_%s@test.com" % n)
+    name = factory.Sequence(lambda n: "Customer Test %s" % n)
+
+
+class FavoriteProductFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = FavoriteProduct
+
+    customer = factory.SubFactory(CustomerFactory)
+    product = factory.SubFactory(ProductFactory)

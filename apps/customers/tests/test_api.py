@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from apps.customers.tests.factories import CustomerFactory
+from gpfavoriteproducts.factories import CustomerFactory
 
 
 class CustomerAPITestCase(APITestCase):
@@ -50,7 +50,7 @@ class CustomerAPITestCase(APITestCase):
         self.assertEqual(is_auth, True)
 
     def test_delete_customer(self):
-        customer = CustomerFactory(title="Customer Test 3")
+        customer = CustomerFactory(name="Customer Test 3")
         self.client.force_authenticate(customer)
 
         url = reverse("customers-detail", kwargs={"pk": customer.pk})
