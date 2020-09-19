@@ -21,3 +21,9 @@ class CustomerTestCase(TestCase):
         with self.assertRaises(IntegrityError):
             customer.password = None
             customer.save()
+
+    def test_create_customer_with_existing_email(self):
+        Customer.objects.create_customer("test@test.com", "Test customer", "123456")
+
+        with self.assertRaises(IntegrityError):
+            Customer.objects.create_customer("test@test.com", "Test customer 2", "123456")
