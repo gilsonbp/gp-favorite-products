@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.translation import gettext as _
 from sorl.thumbnail import ImageField
 
+from apps.customers.models import Customer
+
 
 class CommonModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -35,3 +37,20 @@ class Product(CommonModel):
         ordering = ("title",)
         verbose_name = _("Product")
         verbose_name_plural = _("Product")
+
+
+class FavoriteProduct(CommonModel):
+    customer = models.ForeignKey(
+        Customer, verbose_name=_("Customer"), on_delete=models.PROTECT, related_name="favorites"
+    )
+    product = models.ForeignKey(
+        "Product", verbose_name=_("Product"), on_delete=models.PROTECT, related_name="favorites"
+    )
+
+    def __str__(self):
+        return f"{self.customer.get_full_name() - self.product.title}"
+
+    class Meta:
+        unique_together = ("customer", "product")
+        verbose_name = _("Favorite Product")
+        verbose_name_plural = _("Favorite Products")
