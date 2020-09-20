@@ -77,3 +77,9 @@ class FavoriteProductAPITestCase(APITestCase):
         data = {"product": product.pk}
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_list_favorite_products(self):
+        url = reverse("favorites:favorite-products-list")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["count"], 1)
