@@ -51,6 +51,7 @@ class FavoriteProduct(CommonModel):
         return f"{self.customer.get_full_name()} - {self.product.title}"
 
     class Meta:
+        ordering = ("-created_at",)
         unique_together = ("customer", "product")
         verbose_name = _("Favorite Product")
         verbose_name_plural = _("Favorite Products")
