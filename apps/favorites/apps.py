@@ -6,3 +6,6 @@ class FavoritesConfig(AppConfig):
     name = "apps.favorites"
     label = "favorites"
     verbose_name = _("Favorites")
+
+    def ready(self):
+        from . import signals
