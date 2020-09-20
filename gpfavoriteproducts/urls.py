@@ -21,7 +21,7 @@ schema_view = get_schema_view(
         license=openapi.License(name="GNU General Public License v3.0"),
     ),
     public=True,
-    permission_classes=(permissions.IsAuthenticated,),
+    permission_classes=(permissions.AllowAny,),
 )
 
 router = DefaultRouter()
