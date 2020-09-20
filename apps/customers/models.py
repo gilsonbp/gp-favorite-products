@@ -46,9 +46,6 @@ class CustomerManager(BaseUserManager):
         customer.is_superuser = True
         customer.is_staff = True
         customer.save(using=self._db)
-        customer.email_customer(
-            _("Registration Successful!"), "Login: {} | Password: {}".format(email, password),
-        )
         return customer
 
 
@@ -115,9 +112,3 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         return self.name
 
     get_full_name.short_description = _("Full name")
-
-    def email_customer(self, subject, message, from_email=None, **kwargs):
-        """
-        Sends an email to this Customer.
-        """
-        send_mail(subject, message, from_email, [self.email], **kwargs)
