@@ -5,7 +5,7 @@ from PIL import Image
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from gpfavoriteproducts.factories import CustomerFactory, ProductFactory
+from gpfavoriteproducts.factories import CustomerFactory, ProductFactory, FavoriteProductFactory
 
 
 class ProductAPITestCase(APITestCase):
@@ -65,13 +65,15 @@ class FavoriteProductAPITestCase(APITestCase):
     def setUpTestData(cls):
         cls.customer = CustomerFactory()
         cls.product = ProductFactory()
+        cls.favorite_product = FavoriteProductFactory(customer=cls.customer, product=cls.product)
 
     def setUp(self):
         self.client = APIClient()
         self.client.force_authenticate(self.customer)
 
     def test_create_favorite_product(self):
+        product = ProductFactory()
         url = reverse("favorites:favorite-products-list")
-        data = {"product": self.product.pk}
+        data = {"product": product.pk}
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
